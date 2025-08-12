@@ -1,0 +1,22 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Read the commit message from the passed file
+commit_msg=$(cat "$1")
+
+# Use awk to filter out comments and lines that are empty or only have spaces
+actual_msg=$(echo "$commit_msg" | awk 'NF && $1 !~ /^#/')
+
+# Extract the first line and subsequent lines separately
+first_line=$(echo "$actual_msg" | head -n1)
+other_lines=$(echo "$actual_msg" | tail -n +2)
+
+# Format only the first line of the commit message
+formatted_first_line=$(echo "$first_line" | sed -e $'s/^[ \t]*//' -e $'s/[ \t]*\.*[ \t]*$//' -E -e $'s/[ \t]+/ /g' | awk '{ $0=toupper(substr($0,1,1)) substr($0,2); } 1')
+
+# Concatenate the formatted first line with the other lines (if any)
+formatted_msg="${formatted_first_line}
+${other_lines}"
+
+# Update the commit message
+echo "$formatted_msg" > "$1"

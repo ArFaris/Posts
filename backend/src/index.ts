@@ -16,10 +16,6 @@ expressApp.use(
   })
 );
 
-if (Math.random()) {
-  console.info(12);
-}
-
 expressApp.listen(3000, () => {
   console.info('Listening at http://localhost:3000');
 });
