@@ -11,7 +11,6 @@
     "prettify": "prettier --loglevel warn --cache --write {src/**/*,*}.{ts,tsx,js,json,yml,scss} !**/{node_modules,dist}/**/*",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts,.tsx ."
- 
   },
   "dependencies": {
     "@react_project/backend": "*",
@@ -19,7 +18,8 @@
     "@trpc/client": "^11.4.4",
     "@trpc/react-query": "^11.4.4",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
