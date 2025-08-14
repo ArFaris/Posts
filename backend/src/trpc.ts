@@ -1,38 +1,18 @@
 import { initTRPC } from '@trpc/server';
+import _ from 'lodash'
 
-const posts = [
-  {
-    nick: 'post-nick-1',
-    name: 'Post 1',
-    description: 'Description of post 1...',
-  },
-  {
-    nick: 'post-nick-2',
-    name: 'Post 2',
-    description: 'Description of post 2...',
-  },
-  {
-    nick: 'post-nick-3',
-    name: 'Post 3',
-    description: 'Description of post 3...',
-  },
-  {
-    nick: 'post-nick-4',
-    name: 'Post 4',
-    description: 'Description of post 4...',
-  },
-  {
-    nick: 'post-nick-5',
-    name: 'Post 5',
-    description: 'Description of post 5...',
-  },
-];
+const posts = _.times(100, (i) => ({
+    nick: `post-nick-${i}`,
+    name: `Post ${i}`,
+    description: `Description of post ${i}...`,
+    text: _.times(100, (j) => `<p>Text paragraph ${j} of idea ${i}</p>`).join('')
+}))
 
 const trpc = initTRPC.create();
 
 export const trpcRouter = trpc.router({
   getPosts: trpc.procedure.query(() => {
-    return { posts };
+    return { posts: posts.map((post) => _.pick(post, ['nick', 'name', 'description'])) };
   }),
 });
 
