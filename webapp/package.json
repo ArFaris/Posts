@@ -11,14 +11,14 @@
     "prettify": "prettier --loglevel warn --cache --write {src/**/*,*}.{ts,tsx,js,json,yml,scss} !**/{node_modules,dist}/**/*",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts,.tsx .",
-    "stylelint": "stylelint --cache --cache-location ./node_modules/.cache/.stylelintcache src/**/*.scss"
+    "stylelint": "stylelint --cache --cache-location ./node_modules/.cache/.stylelintcache src/**/*.scss",
+    "stylecheck": "sass --update -q ./src:./node_modules/.cache/.stylecheckcache"
   },
   "dependencies": {
     "@react_project/backend": "*",
     "@tanstack/react-query": "^5.84.2",
     "@trpc/client": "^11.4.4",
     "@trpc/react-query": "^11.4.4",
-    "include-media": "^2.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.0",
@@ -31,6 +31,7 @@
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
     "globals": "^16.3.0",
+    "include-media": "^2.0.0",
     "prettier": "^3.6.2",
     "stylelint": "^16.23.1",
     "stylelint-config-prettier-scss": "^1.0.0",
