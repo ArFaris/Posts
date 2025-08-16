@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
+import { Segment } from '../../components/Segment';
 import type { ViewPostRouteParams } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
-import css from './index.module.scss'
+import css from './index.module.scss';
 
 export const ViewPostPage = () => {
   const { postNick } = useParams() as ViewPostRouteParams;
@@ -23,10 +24,8 @@ export const ViewPostPage = () => {
   }
 
   return (
-    <div>
-      <h1 className={css.title}>{data.post.name}</h1>
-      <p className={css.description}>{data.post.description}</p>
+    <Segment title={data.post.name} description={data.post.description}>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.post.text }} />
-    </div>
+    </Segment>
   );
 };

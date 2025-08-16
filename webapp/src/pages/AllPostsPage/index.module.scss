@@ -1,10 +1,6 @@
 @import '../../styles/_vars.scss';
 @import '../../styles/_mixins.scss';
 
-.title {
-  @include h1;
-}
-
 .posts {
   .post {
     padding: 20px;
@@ -14,16 +10,8 @@
       margin-top: 20px;
     }
 
-    .postName {
-      @include h2;
-
-      .postLink {
-        @include link;
-      }
-    }
-
-    .postDescription {
-      font-size: 18px;
+    .postLink {
+      @include link;
     }
   }
 }
