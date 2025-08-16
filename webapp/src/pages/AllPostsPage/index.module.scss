@@ -1,0 +1,29 @@
+@import '../../styles/_vars.scss';
+@import '../../styles/_mixins.scss';
+
+.title {
+  @include h1;
+}
+
+.posts {
+  .post {
+    padding: 20px;
+    border: 1px solid $black;
+    border-radius: 10px;
+    & + .post {
+      margin-top: 20px;
+    }
+
+    .postName {
+      @include h2;
+
+      .postLink {
+        @include link;
+      }
+    }
+
+    .postDescription {
+      font-size: 18px;
+    }
+  }
+}

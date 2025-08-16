@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { getViewPostRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
+import css from './index.module.scss'
 
 export const AllPostsPage = () => {
   // компонент - яваскрипт функция, начинающаяся с большой буквы, и возвращает jsx структуру (html теги ИЛИ синтаксический сахар для вызова функций)
@@ -14,17 +15,20 @@ export const AllPostsPage = () => {
   }
 
   return (
-    // теги - структурные элементы таблицы
     <div>
-      <h1>All Posts</h1>
-      {data?.posts.map((post) => (
-        <div key={post.nick}>
-          <h2>
-            <Link to={getViewPostRoute({ postNick: post.nick })}>{post.name}</Link>
-          </h2>
-          <p>{post.description}</p>
+        <h1 className={css.title}>All Posts</h1>
+        <div className={css.posts}>
+            {data?.posts.map((post) => (
+                <div className={css.post} key={post.nick}>
+                    <h2 className={css.postName}>
+                        <Link className={css.postLink} to={getViewPostRoute({ postNick: post.nick })}>
+                            {post.name}
+                        </Link>
+                    </h2>
+                    <p className={css.postDescription}>{post.description}</p>
+                </div>
+            ))}
         </div>
-      ))}
     </div>
-  );
+  )
 };
