@@ -1,5 +1,5 @@
-@import '../styles/_vars.scss';
-@import '../styles/_mixins.scss';
+@import '../styles/vars';
+@import '../styles/mixins';
 
 $breakpoint: '<=900px';
 
@@ -37,6 +37,7 @@ $breakpoint: '<=900px';
       &:not(:first-child) {
         margin-top: 5px;
       }
+
       .link {
         @include link;
       }
