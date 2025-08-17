@@ -16,7 +16,7 @@ rules:
     - patterns:
         - group:
             - '@react_project/backend/**'
-            - '!@react-project/backend/**/'
-            - '!@react-project/backend/**/input'
+            - '!@react_project/backend/**/'
+            - '!@react_project/backend/**/input'
           allowTypeImports: true
           message: 'Only types and input schemas are allowed to be importes from backend workspace'

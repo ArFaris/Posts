@@ -1,6 +1,7 @@
 import { zCreatePostTrpcInput } from '@react_project/backend/src/router/createPost/input';
 import { useFormik } from 'formik';
 import { withZodSchema } from 'formik-validator-zod';
+import { useState } from 'react';
 import type { z } from 'zod';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
@@ -8,6 +9,7 @@ import { TextArea } from '../../components/TextArea';
 import { trpc } from '../../lib/trpc';
 
 export const NewPostPage = () => {
+  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
   const createPost = trpc.createPost.useMutation();
   const formik = useFormik({
     initialValues: {
@@ -26,6 +28,11 @@ export const NewPostPage = () => {
     ),
     onSubmit: async (values) => {
       await createPost.mutateAsync(values);
+      formik.resetForm();
+      setSuccessMessageVisible(true);
+      setTimeout(() => {
+        setSuccessMessageVisible(false);
+      }, 3000);
     },
   });
 
@@ -42,7 +49,10 @@ export const NewPostPage = () => {
         <Input name="description" label="Description" formik={formik} />
         <TextArea name="text" label="Text" formik={formik} />
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
-        <button type="submit">Create Post</button>
+        {successMessageVisible && <div style={{ color: 'green' }}>Post created</div>}
+        <button type="submit" disabled={formik.isSubmitting}>
+          {formik.isSubmitting ? 'Submitting...' : 'Create Post'}
+        </button>
       </form>
     </Segment>
   );
