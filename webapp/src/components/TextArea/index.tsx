@@ -1,26 +1,27 @@
+import { type FormikProps } from "formik"
+
 export const TextArea = ({
   name,
   label,
-  state,
-  setState,
+  formik,
 }: {
   name: string;
   label: string;
-  state: Record<string, any>;
-  setState: React.Dispatch<React.SetStateAction<any>>;
+  formik: FormikProps<any>
 }) => {
-  return (
+    const value = formik.values[name]
+    return (
     <div style={{ marginBottom: 10 }}>
-      <label htmlFor={name}>{label}</label>
-      <br />
-      <textarea
+        <label htmlFor={name}>{label}</label>
+        <br />
+        <textarea
         onChange={(e) => {
-          setState({ ...state, [name]: e.target.value });
+            void formik.setFieldValue(name, e.target.value)
         }}
-        value={state[name]}
+        value={value}
         name={name}
         id={name}
-      />
+        />
     </div>
-  );
+    );
 };
