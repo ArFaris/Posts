@@ -10,6 +10,7 @@ import { trpc } from '../../lib/trpc';
 
 export const NewPostPage = () => {
   const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+  const [submittingError, setSubmittingError] = useState<string | null>(null)
   const createPost = trpc.createPost.useMutation();
   const formik = useFormik({
     initialValues: {
@@ -27,12 +28,19 @@ export const NewPostPage = () => {
       }>
     ),
     onSubmit: async (values) => {
-      await createPost.mutateAsync(values);
-      formik.resetForm();
-      setSuccessMessageVisible(true);
-      setTimeout(() => {
-        setSuccessMessageVisible(false);
-      }, 3000);
+      try{
+        await createPost.mutateAsync(values);
+        formik.resetForm();
+        setSuccessMessageVisible(true);
+        setTimeout(() => {
+          setSuccessMessageVisible(false);
+        }, 3000);
+      } catch (error: any) {
+        setSubmittingError(error.message)
+        setTimeout(() => {
+          setSubmittingError(null)
+        }, 3000);
+      }
     },
   });
 
@@ -49,6 +57,7 @@ export const NewPostPage = () => {
         <Input name="description" label="Description" formik={formik} />
         <TextArea name="text" label="Text" formik={formik} />
         {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
+        {!!submittingError && <div style={{color: 'red'}}>{submittingError}</div>}
         {successMessageVisible && <div style={{ color: 'green' }}>Post created</div>}
         <button type="submit" disabled={formik.isSubmitting}>
           {formik.isSubmitting ? 'Submitting...' : 'Create Post'}
