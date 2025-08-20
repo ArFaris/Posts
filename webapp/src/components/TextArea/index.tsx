@@ -19,7 +19,6 @@ export const TextArea = ({ name, label, formik }: { name: string; label: string;
       <label className={css.label} htmlFor={name}>
         {label}
       </label>
-      <br />
       <textarea
         className={cn({
           [css.input]: true,
