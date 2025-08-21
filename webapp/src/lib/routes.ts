@@ -8,4 +8,8 @@ export const viewPostRouteParams = getRouteParams({ postNick: true });
 export type ViewPostRouteParams = typeof viewPostRouteParams;
 export const getViewPostRoute = ({ postNick }: ViewPostRouteParams) => `/posts/${postNick}`;
 
-export const getNewPostRoute = () => '/posts/new'
+export const getNewPostRoute = () => '/posts/new';
+
+export const getSignUpRoute = () => '/sign-up';
+
+export const getSignInRoute = () => '/sign-in';
