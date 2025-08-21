@@ -1,11 +1,20 @@
-import { posts } from '../../lib/posts';
 import { trpc } from '../../lib/trpc';
 import { zCreatePostTrpcInput } from './input';
 
-export const createPostTrpcRoute = trpc.procedure.input(zCreatePostTrpcInput).mutation(({ input }) => {
-  if (posts.find((post) => post.nick === input.nick)) {
+export const createPostTrpcRoute = trpc.procedure.input(zCreatePostTrpcInput).mutation(async ({ ctx, input }) => {
+  const exPost = await ctx.prisma.post.findUnique({
+    where: {
+      nick: input.nick,
+    }
+  })
+
+  if (exPost) {
     throw new Error('Post with this nick already exists');
   }
-  posts.unshift(input);
+
+  await ctx.prisma.post.create({
+    data: input
+  })
+
   return true;
 });

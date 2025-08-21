@@ -1,5 +1,4 @@
 import z from 'zod';
-import { posts } from '../../lib/posts';
 import { trpc } from '../../lib/trpc';
 
 export const getPostTrpcRoute = trpc.procedure
@@ -8,10 +7,12 @@ export const getPostTrpcRoute = trpc.procedure
       postNick: z.string(),
     })
   )
-  .query(({ input }) => {
-    const post = posts.find((post) => post.nick === input.postNick);
-    if (!post) {
-      throw new Error(`Post ${input.postNick} not found`);
-    }
-    return { post };
+  .query(async ({ ctx, input }) => {
+    const post = await ctx.prisma.post.findUnique({
+      where: {
+        nick: input.postNick,
+      },
+    })
+
+    return {post}
   });
