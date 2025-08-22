@@ -27,6 +27,7 @@ export const ViewPostPage = () => {
   return (
     <Segment title={data.post.name} description={data.post.description}>
       <div className={css.createdAt}>Created At: {format(data.post.createdAt, 'yyyy-MM-dd')}</div>
+      <div className={css.author}>Author: {data.post.author.nick}</div>
       <div className={css.text} dangerouslySetInnerHTML={{ __html: data.post.text }} />
     </Segment>
   );

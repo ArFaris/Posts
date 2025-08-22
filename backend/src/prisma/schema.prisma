@@ -12,6 +12,7 @@ model User {
     nick      String   @unique
     password  String
     createdAt DateTime @default(now())
+    posts      Post[]
 }
 
 model Post {
@@ -21,4 +22,6 @@ model Post {
     description String
     text        String
     createdAt   DateTime @default(now())
+    authorId    String
+    author      User     @relation(fields: [authorId], references: [id])
 }
