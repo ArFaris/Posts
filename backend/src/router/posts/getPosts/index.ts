@@ -3,6 +3,8 @@ import { trpc } from '../../../lib/trpc';
 import { zGetPostsTrpcInput } from './input';
 
 export const getPostsTrpcRoute = trpc.procedure.input(zGetPostsTrpcInput).query(async ({ ctx, input }) => {
+  // const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, '_') : undefined
+  const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, ' & ') : undefined;
   const rawPosts = await ctx.prisma.post.findMany({
     select: {
       id: true,
@@ -16,6 +18,27 @@ export const getPostsTrpcRoute = trpc.procedure.input(zGetPostsTrpcInput).query(
         },
       },
     },
+    where: !input.search
+      ? undefined
+      : {
+          OR: [
+            {
+              name: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              description: {
+                search: normalizedSearch,
+              },
+            },
+            {
+              text: {
+                search: normalizedSearch,
+              },
+            },
+          ],
+        },
     orderBy: [
       {
         createdAt: 'desc',

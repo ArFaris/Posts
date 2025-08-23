@@ -1,6 +1,10 @@
 @import '../../../styles/vars';
 @import '../../../styles/mixins';
 
+.filter {
+  margin-bottom: 20px;
+}
+
 .posts {
   .post {
     padding: 20px;
