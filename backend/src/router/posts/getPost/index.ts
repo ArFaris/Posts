@@ -17,6 +17,7 @@ export const getPostTrpcRoute = trpc.procedure
           select: {
             id: true,
             nick: true,
+            name: true,
           },
         },
       },

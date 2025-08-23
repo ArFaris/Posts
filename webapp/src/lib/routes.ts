@@ -14,6 +14,8 @@ export const getEditPostRoute = ({ postNick }: EditPostRouteParams) => `/posts/$
 
 export const getNewPostRoute = () => '/posts/new';
 
+export const getEditProfileRoute = () => '/edit-profile';
+
 export const getSignUpRoute = () => '/sign-up';
 
 export const getSignInRoute = () => '/sign-in';

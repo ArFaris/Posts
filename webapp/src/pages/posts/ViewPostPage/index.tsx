@@ -22,7 +22,10 @@ export const ViewPostPage = withPageWrapper({
 })(({ post, me }) => (
   <Segment title={post.name} description={post.description}>
     <div className={css.createdAt}>Created At: {format(post.createdAt, 'yyyy-MM-dd')}</div>
-    <div className={css.author}>Author: {post.author.nick}</div>
+    <div className={css.author}>
+      Author: {post.author.nick}
+      {post.author.name ? ` (${post.author.name})` : ''}
+    </div>{' '}
     <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text }} />
     {me?.id === post.authorId && (
       <div className={css.editButton}>

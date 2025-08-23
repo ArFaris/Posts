@@ -3,6 +3,7 @@ import { trpc } from '../lib/trpc';
 import { getMeTrpcRoute } from './auth/getMe';
 import { signInTrpcRoute } from './auth/signIn';
 import { signUpTrpcRoute } from './auth/signUp';
+import { updateProfileTrpcRoute } from './auth/updateProfile';
 import { updatePostTrpcRoute } from './posts/UpdatePost';
 import { createPostTrpcRoute } from './posts/createPost';
 import { getPostTrpcRoute } from './posts/getPost';
@@ -12,6 +13,7 @@ export const trpcRouter = trpc.router({
   getMe: getMeTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
+  updateProfile: updateProfileTrpcRoute,
   createPost: createPostTrpcRoute,
   getPost: getPostTrpcRoute,
   getPosts: getPostsTrpcRoute,
