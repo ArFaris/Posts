@@ -21,14 +21,13 @@ export const EditPostPage = withPageWrapper({
       postNick,
     });
   },
-  checkExists: ({ queryResult }) => !!queryResult.data.post,
-  checkExistsMessage: 'Post not found',
-  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data?.post?.authorId,
-  checkAccessMessage: 'A post can only be edited by the author',
-  setProps: ({ queryResult }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    post: queryResult.data.post!,
-  }),
+  setProps: ({ queryResult, ctx, checkExists, checkAccess }) => {
+    const post = checkExists(queryResult.data.post, 'Idea not found');
+    checkAccess(ctx.me?.id === post.authorId, 'An idea can only be edited by the author');
+    return {
+      post,
+    };
+  },
 })(({ post }) => {
   const navigate = useNavigate();
   const updatePost = trpc.updatePost.useMutation();

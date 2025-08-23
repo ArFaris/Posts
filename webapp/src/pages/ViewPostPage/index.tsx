@@ -14,21 +14,19 @@ export const ViewPostPage = withPageWrapper({
       postNick,
     });
   },
-  checkExists: ({ queryResult }) => !!queryResult.data.post,
-  checkExistsMessage: 'Idea not found',
-  setProps: ({ queryResult, ctx }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    idea: queryResult.data.post!,
+  setProps: ({ queryResult, checkExists, ctx }) => ({
+    post: checkExists(queryResult.data.post, 'Idea not found'),
+
     me: ctx.me,
   }),
-})(({ idea, me }) => (
-  <Segment title={idea.name} description={idea.description}>
-    <div className={css.createdAt}>Created At: {format(idea.createdAt, 'yyyy-MM-dd')}</div>
-    <div className={css.author}>Author: {idea.author.nick}</div>
-    <div className={css.text} dangerouslySetInnerHTML={{ __html: idea.text }} />
-    {me?.id === idea.authorId && (
+})(({ post, me }) => (
+  <Segment title={post.name} description={post.description}>
+    <div className={css.createdAt}>Created At: {format(post.createdAt, 'yyyy-MM-dd')}</div>
+    <div className={css.author}>Author: {post.author.nick}</div>
+    <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text }} />
+    {me?.id === post.authorId && (
       <div className={css.editButton}>
-        <LinkButton to={getEditPostRoute({ postNick: idea.nick })}>Edit Idea</LinkButton>
+        <LinkButton to={getEditPostRoute({ postNick: post.nick })}>Edit Post</LinkButton>
       </div>
     )}
   </Segment>
