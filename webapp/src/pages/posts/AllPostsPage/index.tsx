@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Alert } from '../../../components/Alert'
+import { Loader } from '../../../components/Loader'
 import { Segment } from '../../../components/Segment';
 import { getViewPostRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
@@ -21,7 +22,7 @@ export const AllPostsPage = () => {
   return (
     <Segment title="All Posts">
       {isLoading || isRefetching ? (
-        <div>Loading...</div>
+        <Loader type="section" />
       ) : isError ? (
         <Alert color="red">{error.message}</Alert>
       ) : (
@@ -51,7 +52,8 @@ export const AllPostsPage = () => {
                 Load more
               </button>
             )}
-            {isFetchingNextPage && <span>Loading...</span>}
+            {isFetchingNextPage &&  <Loader type="section" />
+              }
           </div>
         </div>
       )}
