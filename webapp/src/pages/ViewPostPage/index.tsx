@@ -2,43 +2,34 @@ import { format } from 'date-fns/format';
 import { useParams } from 'react-router-dom';
 import { LinkButton } from '../../components/Button';
 import { Segment } from '../../components/Segment';
-import { useMe } from '../../lib/ctx';
+import { withPageWrapper } from '../../lib/pageWrapper';
 import { getEditPostRoute, type ViewPostRouteParams } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 import css from './index.module.scss';
 
-export const ViewPostPage = () => {
-  const { postNick } = useParams() as ViewPostRouteParams;
-
-  const getPostResult = trpc.getPost.useQuery({
-    postNick,
-  });
-  const me = useMe();
-
-  if (getPostResult.isLoading || getPostResult.isFetching) {
-    return <span>Loading...</span>;
-  }
-
-  if (getPostResult.isError) {
-    return <span>Error: {getPostResult.error.message}</span>;
-  }
-
-  if (!getPostResult.data?.post) {
-    return <span>Post not found</span>;
-  }
-
-  const post = getPostResult.data.post;
-
-  return (
-    <Segment title={post.name} description={post.description}>
-      <div className={css.createdAt}>Created At: {format(post.createdAt, 'yyyy-MM-dd')}</div>
-      <div className={css.author}>Author: {post.author.nick}</div>
-      <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text }} />
-      {me?.id === post.authorId && (
-        <div className={css.editButton}>
-          <LinkButton to={getEditPostRoute({ postNick: post.nick })}>Edit Post</LinkButton>
-        </div>
-      )}
-    </Segment>
-  );
-};
+export const ViewPostPage = withPageWrapper({
+  useQuery: () => {
+    const { postNick } = useParams() as ViewPostRouteParams;
+    return trpc.getPost.useQuery({
+      postNick,
+    });
+  },
+  checkExists: ({ queryResult }) => !!queryResult.data.post,
+  checkExistsMessage: 'Idea not found',
+  setProps: ({ queryResult, ctx }) => ({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    idea: queryResult.data.post!,
+    me: ctx.me,
+  }),
+})(({ idea, me }) => (
+  <Segment title={idea.name} description={idea.description}>
+    <div className={css.createdAt}>Created At: {format(idea.createdAt, 'yyyy-MM-dd')}</div>
+    <div className={css.author}>Author: {idea.author.nick}</div>
+    <div className={css.text} dangerouslySetInnerHTML={{ __html: idea.text }} />
+    {me?.id === idea.authorId && (
+      <div className={css.editButton}>
+        <LinkButton to={getEditPostRoute({ postNick: idea.nick })}>Edit Idea</LinkButton>
+      </div>
+    )}
+  </Segment>
+));
