@@ -1,0 +1,46 @@
+diff --git a/webapp/src/App.tsx b/webapp/src/App.tsx
+index 2de6ae60..1f9da51f 100644
+--- a/webapp/src/App.tsx
++++ b/webapp/src/App.tsx
+@@ -1,5 +1,6 @@
+ import { BrowserRouter, Route, Routes } from 'react-router-dom';
+ import { Layout } from './components/Layout';
++import { AppContextProvider } from './lib/ctx'
+ import * as routes from './lib/routes';
+ import { TrpcProvider } from './lib/trpc';
+ import { AllPostsPage } from './pages/AllPostsPage';
+@@ -14,19 +15,21 @@ import './styles/global.scss';
+ export const App = () => {
+   return (
+     <TrpcProvider>
+-      <BrowserRouter>
+-        <Routes>
+-          <Route path={routes.getSignOutRoute()} element={<SignOutPage />} />
+-          <Route element={<Layout />}>
+-            <Route path={routes.getSignUpRoute()} element={<SignUpPage />} />
+-            <Route path={routes.getSignInRoute()} element={<SignInPage />} />
+-            <Route path={routes.getAllPostsRoute()} element={<AllPostsPage />} />
+-            <Route path={routes.getNewPostRoute()} element={<NewPostPage />} />
+-            <Route path={routes.getViewPostRoute(routes.viewPostRouteParams)} element={<ViewPostPage />} />
+-            <Route path={routes.getEditPostRoute(routes.editPostRouteParams)} element={<EditPostPage />} />
+-          </Route>
+-        </Routes>
+-      </BrowserRouter>
++      <AppContextProvider>
++        <BrowserRouter>
++          <Routes>
++            <Route path={routes.getSignOutRoute()} element={<SignOutPage />} />
++            <Route element={<Layout />}>
++              <Route path={routes.getSignUpRoute()} element={<SignUpPage />} />
++              <Route path={routes.getSignInRoute()} element={<SignInPage />} />
++              <Route path={routes.getAllPostsRoute()} element={<AllPostsPage />} />
++              <Route path={routes.getNewPostRoute()} element={<NewPostPage />} />
++              <Route path={routes.getViewPostRoute(routes.viewPostRouteParams)} element={<ViewPostPage />} />
++              <Route path={routes.getEditPostRoute(routes.editPostRouteParams)} element={<EditPostPage />} />
++            </Route>
++          </Routes>
++        </BrowserRouter>
++      </AppContextProvider>
+     </TrpcProvider>
+   );
+ };
