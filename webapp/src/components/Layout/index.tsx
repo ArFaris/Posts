@@ -8,7 +8,7 @@ import {
   getSignOutRoute,
   getSignUpRoute,
 } from '../../lib/routes';
-import css from '../index.module.scss';
+import css from './index.module.scss';
 
 export const Layout = () => {
   const me = useMe();

@@ -39,7 +39,9 @@ export const AllPostsPage = () => {
                     </Link>
                   }
                   description={post.description}
-                />
+                                    >
+                    Likes: {post.likesCount}
+                  </Segment>
               </div>
             ))}
           <div className={css.more}>

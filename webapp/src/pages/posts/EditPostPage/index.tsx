@@ -1,5 +1,4 @@
 import { zUpdatePostTrpcInput } from '@react_project/backend/src/router/posts/updatePost/input';
-import { pick } from 'lodash';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { ZodSchema } from 'zod';
 import { Alert } from '../../../components/Alert';
@@ -32,7 +31,12 @@ export const EditPostPage = withPageWrapper({
   const navigate = useNavigate();
   const updatePost = trpc.updatePost.useMutation();
   const { formik, alertProps, buttonProps } = useForm({
-    initialValues: pick(post, ['name', 'nick', 'description', 'text']),
+    initialValues:{
+      name: post?.name ?? '',
+      nick: post?.nick ?? '',
+      description: post?.description ?? '',
+      text: post?.text ?? '',
+    },
     validationSchema: zUpdatePostTrpcInput.omit({ postId: true }) as unknown as ZodSchema<{
       name: string;
       nick: string;
@@ -40,7 +44,7 @@ export const EditPostPage = withPageWrapper({
       text: string;
     }>,
     onSubmit: async (values) => {
-      await updatePost.mutateAsync({ postId: post.id, ...values });
+      await updatePost.mutateAsync({ postId: post.id!, ...values });
       navigate(getViewPostRoute({ postNick: values.nick }));
     },
     resetOnSuccess: false,

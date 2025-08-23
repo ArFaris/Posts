@@ -9,6 +9,7 @@ import { updatePostTrpcRoute } from './posts/UpdatePost';
 import { createPostTrpcRoute } from './posts/createPost';
 import { getPostTrpcRoute } from './posts/getPost';
 import { getPostsTrpcRoute } from './posts/getPosts';
+import { setPostLikeTrpcRoute } from './posts/setPostLike';
 
 export const trpcRouter = trpc.router({
   getMe: getMeTrpcRoute,
@@ -19,6 +20,7 @@ export const trpcRouter = trpc.router({
   createPost: createPostTrpcRoute,
   getPost: getPostTrpcRoute,
   getPosts: getPostsTrpcRoute,
+  setPostLike: setPostLikeTrpcRoute,
   updatePost: updatePostTrpcRoute,
 });
 
