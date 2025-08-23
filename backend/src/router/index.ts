@@ -1,20 +1,20 @@
 import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server';
 import { trpc } from '../lib/trpc';
-import { updatePostTrpcRoute } from './UpdatePost';
-import { createPostTrpcRoute } from './createPost';
-import { getMeTrpcRoute } from './getMe';
-import { getPostTrpcRoute } from './getPost';
-import { getPostsTrpcRoute } from './getPosts';
-import { signInTrpcRoute } from './signIn';
-import { signUpTrpcRoute } from './signUp';
+import { getMeTrpcRoute } from './auth/getMe';
+import { signInTrpcRoute } from './auth/signIn';
+import { signUpTrpcRoute } from './auth/signUp';
+import { updatePostTrpcRoute } from './posts/UpdatePost';
+import { createPostTrpcRoute } from './posts/createPost';
+import { getPostTrpcRoute } from './posts/getPost';
+import { getPostsTrpcRoute } from './posts/getPosts';
 
 export const trpcRouter = trpc.router({
+  getMe: getMeTrpcRoute,
+  signIn: signInTrpcRoute,
+  signUp: signUpTrpcRoute,
   createPost: createPostTrpcRoute,
   getPost: getPostTrpcRoute,
   getPosts: getPostsTrpcRoute,
-  getMe: getMeTrpcRoute,
-  signUp: signUpTrpcRoute,
-  signIn: signInTrpcRoute,
   updatePost: updatePostTrpcRoute,
 });
 

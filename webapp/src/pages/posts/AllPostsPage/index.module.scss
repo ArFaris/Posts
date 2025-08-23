@@ -1,0 +1,18 @@
+@import '../../../styles/vars';
+@import '../../../styles/mixins';
+
+.posts {
+  .post {
+    padding: 20px;
+    border: 1px solid $black;
+    border-radius: 10px;
+
+    & + .post {
+      margin-top: 20px;
+    }
+
+    .postLink {
+      @include link;
+    }
+  }
+}

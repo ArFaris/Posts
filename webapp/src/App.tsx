@@ -3,14 +3,14 @@ import { Layout } from './components/Layout';
 import { AppContextProvider } from './lib/ctx';
 import * as routes from './lib/routes';
 import { TrpcProvider } from './lib/trpc';
-import { AllPostsPage } from './pages/AllPostsPage';
-import { EditPostPage } from './pages/EditPostPage';
-import { NewPostPage } from './pages/NewPostPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-import { SignInPage } from './pages/SignInPage';
-import { SignOutPage } from './pages/SignOutPage';
-import { SignUpPage } from './pages/SignUpPage';
-import { ViewPostPage } from './pages/ViewPostPage';
+import { SignInPage } from './pages/auth/SignInPage'
+import { SignOutPage } from './pages/auth/SignOutPage'
+import { SignUpPage } from './pages/auth/SignUpPage'
+import { NotFoundPage } from './pages/other/NotFoundPage'
+import { AllPostsPage } from './pages/posts/AllPostsPage'
+import { EditPostPage } from './pages/posts/EditPostPage'
+import { NewPostPage } from './pages/posts/NewPostPage'
+import { ViewPostPage } from './pages/posts/ViewPostPage'
 import './styles/global.scss';
 
 export const App = () => {
