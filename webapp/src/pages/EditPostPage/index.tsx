@@ -1,9 +1,6 @@
 import type { TrpcRouterOutput } from '@react_project/backend/src/router';
 import { zUpdatePostTrpcInput } from '@react_project/backend/src/router/updatePost/input';
-import { useFormik } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
 import { pick } from 'lodash';
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { ZodSchema } from 'zod';
 import { Alert } from '../../components/Alert';
@@ -12,32 +9,27 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { TextArea } from '../../components/TextArea';
+import { useForm } from '../../lib/form';
 import { getViewPostRoute, type EditPostRouteParams } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
 const EditPostComponent = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['post']> }) => {
   const navigate = useNavigate();
-  const [submittingError, setSubmittingError] = useState<string | null>(null);
   const updatePost = trpc.updatePost.useMutation();
-  const formik = useFormik({
+  const { formik, alertProps, buttonProps } = useForm({
     initialValues: pick(post, ['name', 'nick', 'description', 'text']),
-    validate: withZodSchema(
-      zUpdatePostTrpcInput.omit({ postId: true }) as unknown as ZodSchema<{
-        name: string;
-        nick: string;
-        description: string;
-        text: string;
-      }>
-    ),
+    validationSchema: zUpdatePostTrpcInput.omit({ postId: true }) as unknown as ZodSchema<{
+      name: string;
+      nick: string;
+      description: string;
+      text: string;
+    }>,
     onSubmit: async (values) => {
-      try {
-        setSubmittingError(null);
-        await updatePost.mutateAsync({ postId: post.id, ...values });
-        navigate(getViewPostRoute({ postNick: values.nick }));
-      } catch (err: any) {
-        setSubmittingError(err.message);
-      }
+      await updatePost.mutateAsync({ postId: post.id, ...values });
+      navigate(getViewPostRoute({ postNick: values.nick }));
     },
+    resetOnSuccess: false,
+    showValidationAlert: true,
   });
 
   return (
@@ -48,9 +40,8 @@ const EditPostComponent = ({ post }: { post: NonNullable<TrpcRouterOutput['getPo
           <Input label="Nick" name="nick" formik={formik} />
           <Input label="Description" name="description" formik={formik} />
           <TextArea label="Text" name="text" formik={formik} />
-          {!formik.isValid && !!formik.submitCount && <Alert color="red">Some fields are invalid</Alert>}
-          {submittingError && <Alert color="red">{submittingError}</Alert>}
-          <Button loading={formik.isSubmitting}>Update post</Button>
+          <Alert {...alertProps} />
+          <Button {...buttonProps}>Edit Post</Button>
         </FormItems>
       </form>
     </Segment>

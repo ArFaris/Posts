@@ -11,9 +11,11 @@ export const Button = ({ children, loading = false }: { children: React.ReactNod
 };
 
 export const LinkButton = ({ children, to }: { children: React.ReactNode; to: string }) => {
-    return (
-        <Link className={cn({ [css.button]: true })} to={to}>
-            {children}
-        </Link>
-    )
-}
+  return (
+    <Link className={cn({ [css.button]: true })} to={to}>
+      {children}
+    </Link>
+  );
+};
+
+export type ButtonProps = { children: React.ReactNode; loading?: boolean };

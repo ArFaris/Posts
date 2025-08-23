@@ -1,7 +1,4 @@
 import { zCreatePostTrpcInput } from '@react_project/backend/src/router/createPost/input';
-import { useFormik } from 'formik';
-import { withZodSchema } from 'formik-validator-zod';
-import { useState } from 'react';
 import type { z } from 'zod';
 import { Alert } from '../../components/Alert';
 import { Button } from '../../components/Button';
@@ -9,42 +6,30 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { TextArea } from '../../components/TextArea';
+import { useForm } from '../../lib/form';
 import { trpc } from '../../lib/trpc';
 
 export const NewPostPage = () => {
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
-  const [submittingError, setSubmittingError] = useState<string | null>(null);
   const createPost = trpc.createPost.useMutation();
-  const formik = useFormik({
+  const { formik, buttonProps, alertProps } = useForm({
     initialValues: {
       name: '',
       nick: '',
       description: '',
       text: '',
     },
-    validate: withZodSchema(
-      zCreatePostTrpcInput as unknown as z.ZodType<{
-        name: string;
-        nick: string;
-        description: string;
-        text: string;
-      }>
-    ),
+    validationSchema: zCreatePostTrpcInput as unknown as z.ZodType<{
+      name: string;
+      nick: string;
+      description: string;
+      text: string;
+    }>,
     onSubmit: async (values) => {
-      try {
-        await createPost.mutateAsync(values);
-        formik.resetForm();
-        setSuccessMessageVisible(true);
-        setTimeout(() => {
-          setSuccessMessageVisible(false);
-        }, 3000);
-      } catch (error: any) {
-        setSubmittingError(error.message);
-        setTimeout(() => {
-          setSubmittingError(null);
-        }, 3000);
-      }
+      await createPost.mutateAsync(values);
+      formik.resetForm();
     },
+    successMessage: 'Post created',
+    showValidationAlert: true,
   });
 
   return (
@@ -60,10 +45,8 @@ export const NewPostPage = () => {
           <Input name="nick" label="Nick" formik={formik} />
           <Input name="description" label="Description" formik={formik} maxWidth={500} />
           <TextArea name="text" label="Text" formik={formik} />
-          {!formik.isValid && !!formik.submitCount && <div style={{ color: 'red' }}>Some fields are invalid</div>}
-          {!!submittingError && <Alert color="red">{submittingError}</Alert>}
-          {successMessageVisible && <Alert color="green">Post created</Alert>}
-          <Button loading={formik.isSubmitting}>Create Post</Button>
+          <Alert {...alertProps} />
+          <Button {...buttonProps}>Create post</Button>
         </FormItems>
       </form>
     </Segment>
