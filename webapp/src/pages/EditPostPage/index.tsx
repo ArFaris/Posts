@@ -9,6 +9,7 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { TextArea } from '../../components/TextArea';
+import { useMe } from '../../lib/ctx';
 import { useForm } from '../../lib/form';
 import { getViewPostRoute, type EditPostRouteParams } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
@@ -54,9 +55,9 @@ export const EditPostPage = () => {
   const getPostResult = trpc.getPost.useQuery({
     postNick,
   });
-  const getMeResult = trpc.getMe.useQuery();
+  const me = useMe();
 
-  if (getPostResult.isLoading || getPostResult.isFetching || getMeResult.isLoading || getMeResult.isFetching) {
+  if (getPostResult.isLoading || getPostResult.isFetching) {
     return <span>Loading...</span>;
   }
 
@@ -64,16 +65,11 @@ export const EditPostPage = () => {
     return <span>Error: {getPostResult.error.message}</span>;
   }
 
-  if (getMeResult.isError) {
-    return <span>Error: {getMeResult.error.message}</span>;
-  }
-
   if (!getPostResult.data?.post) {
     return <span>Post not found</span>;
   }
 
   const post = getPostResult.data.post;
-  const me = getMeResult.data?.me;
 
   if (!me) {
     return <span>A post can only be edited by the author</span>;
