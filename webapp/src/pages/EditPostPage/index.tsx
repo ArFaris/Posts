@@ -1,4 +1,3 @@
-import type { TrpcRouterOutput } from '@react_project/backend/src/router';
 import { zUpdatePostTrpcInput } from '@react_project/backend/src/router/updatePost/input';
 import { pick } from 'lodash';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,12 +8,28 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { TextArea } from '../../components/TextArea';
-import { useMe } from '../../lib/ctx';
 import { useForm } from '../../lib/form';
+import { withPageWrapper } from '../../lib/pageWrapper';
 import { getViewPostRoute, type EditPostRouteParams } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
-const EditPostComponent = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['post']> }) => {
+export const EditPostPage = withPageWrapper({
+  authorizedOnly: true,
+  useQuery: () => {
+    const { postNick } = useParams() as EditPostRouteParams;
+    return trpc.getPost.useQuery({
+      postNick,
+    });
+  },
+  checkExists: ({ queryResult }) => !!queryResult.data.post,
+  checkExistsMessage: 'Post not found',
+  checkAccess: ({ queryResult, ctx }) => !!ctx.me && ctx.me.id === queryResult.data?.post?.authorId,
+  checkAccessMessage: 'A post can only be edited by the author',
+  setProps: ({ queryResult }) => ({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    post: queryResult.data.post!,
+  }),
+})(({ post }) => {
   const navigate = useNavigate();
   const updatePost = trpc.updatePost.useMutation();
   const { formik, alertProps, buttonProps } = useForm({
@@ -47,33 +62,4 @@ const EditPostComponent = ({ post }: { post: NonNullable<TrpcRouterOutput['getPo
       </form>
     </Segment>
   );
-};
-
-export const EditPostPage = () => {
-  const { postNick } = useParams() as EditPostRouteParams;
-
-  const getPostResult = trpc.getPost.useQuery({
-    postNick,
-  });
-  const me = useMe();
-
-  if (getPostResult.isLoading || getPostResult.isFetching) {
-    return <span>Loading...</span>;
-  }
-
-  if (getPostResult.isError) {
-    return <span>Error: {getPostResult.error.message}</span>;
-  }
-
-  if (!getPostResult.data?.post) {
-    return <span>Post not found</span>;
-  }
-
-  const post = getPostResult.data.post;
-
-  if (!me) {
-    return <span>A post can only be edited by the author</span>;
-  }
-
-  return <EditPostComponent post={post} />;
-};
+});

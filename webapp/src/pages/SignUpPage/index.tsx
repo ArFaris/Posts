@@ -8,10 +8,13 @@ import { FormItems } from '../../components/FormItems';
 import { Input } from '../../components/Input';
 import { Segment } from '../../components/Segment';
 import { useForm } from '../../lib/form';
+import { withPageWrapper } from '../../lib/pageWrapper';
 import { getAllPostsRoute } from '../../lib/routes';
 import { trpc } from '../../lib/trpc';
 
-export const SignUpPage = () => {
+export const SignUpPage = withPageWrapper({
+  redirectAuthorized: true,
+})(() => {
   const navigate = useNavigate();
   const trpcUtils = trpc.useContext();
   const signUp = trpc.signUp.useMutation();
@@ -57,4 +60,4 @@ export const SignUpPage = () => {
       </form>
     </Segment>
   );
-};
+});
