@@ -6,6 +6,7 @@ import { TrpcProvider } from './lib/trpc';
 import { AllPostsPage } from './pages/AllPostsPage';
 import { EditPostPage } from './pages/EditPostPage';
 import { NewPostPage } from './pages/NewPostPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignOutPage } from './pages/SignOutPage';
 import { SignUpPage } from './pages/SignUpPage';
@@ -26,6 +27,7 @@ export const App = () => {
               <Route path={routes.getNewPostRoute()} element={<NewPostPage />} />
               <Route path={routes.getViewPostRoute(routes.viewPostRouteParams)} element={<ViewPostPage />} />
               <Route path={routes.getEditPostRoute(routes.editPostRouteParams)} element={<EditPostPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

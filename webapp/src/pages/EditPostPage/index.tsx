@@ -22,8 +22,8 @@ export const EditPostPage = withPageWrapper({
     });
   },
   setProps: ({ queryResult, ctx, checkExists, checkAccess }) => {
-    const post = checkExists(queryResult.data.post, 'Idea not found');
-    checkAccess(ctx.me?.id === post.authorId, 'An idea can only be edited by the author');
+    const post = checkExists(queryResult.data.post, 'Post not found');
+    checkAccess(ctx.me?.id === post.authorId, 'A post can only be edited by the author');
     return {
       post,
     };

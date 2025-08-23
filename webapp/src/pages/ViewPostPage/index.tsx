@@ -15,7 +15,7 @@ export const ViewPostPage = withPageWrapper({
     });
   },
   setProps: ({ queryResult, checkExists, ctx }) => ({
-    post: checkExists(queryResult.data.post, 'Idea not found'),
+    post: checkExists(queryResult.data.post, 'Post not found'),
 
     me: ctx.me,
   }),
