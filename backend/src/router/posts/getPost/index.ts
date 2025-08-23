@@ -36,7 +36,9 @@ export const getPostTrpcRoute = trpc.procedure
         },
       },
     });
-
+    if (rawPost?.blockedAt) {
+      throw new Error('Post is blocked by administrator');
+    }
     const isLikedByMe = !!rawPost?.postsLikes.length;
     const likesCount = rawPost?._count.postsLikes || 0;
     const post = rawPost && { ..._.omit(rawPost, ['PostsLikes', '_count']), isLikedByMe, likesCount };

@@ -17,6 +17,12 @@ model User {
     createdAt DateTime @default(now())
     posts     Post[]
     postsLikes PostLike[]
+    permissions UserPermission[]
+}
+
+enum UserPermission {
+  BLOCK_IDEAS
+  ALL
 }
 
 model Post {
@@ -30,6 +36,7 @@ model Post {
     authorId     String
     author       User     @relation(fields: [authorId], references: [id])
     postsLikes   PostLike[]
+    blockedAt    DateTime?
 }
 
 model PostLike {

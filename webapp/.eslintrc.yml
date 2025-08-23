@@ -18,5 +18,6 @@ rules:
             - '@react_project/backend/**'
             - '!@react_project/backend/**/'
             - '!@react_project/backend/**/input'
+            - '!@react_project/backend/src/utils/can'
           allowTypeImports: true
           message: 'Only types and input schemas are allowed to be importes from backend workspace'

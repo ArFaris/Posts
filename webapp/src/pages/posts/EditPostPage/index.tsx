@@ -1,3 +1,4 @@
+import { type MaybePost, canEditPost } from '@react_project/backend/src/Utils/can';
 import { zUpdatePostTrpcInput } from '@react_project/backend/src/router/posts/updatePost/input';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { ZodSchema } from 'zod';
@@ -22,7 +23,7 @@ export const EditPostPage = withPageWrapper({
   },
   setProps: ({ queryResult, ctx, checkExists, checkAccess }) => {
     const post = checkExists(queryResult.data.post, 'Post not found');
-    checkAccess(ctx.me?.id === post.authorId, 'A post can only be edited by the author');
+    checkAccess(canEditPost(ctx.me, post as MaybePost), 'An post can only be edited by the author');
     return {
       post,
     };
@@ -31,7 +32,7 @@ export const EditPostPage = withPageWrapper({
   const navigate = useNavigate();
   const updatePost = trpc.updatePost.useMutation();
   const { formik, alertProps, buttonProps } = useForm({
-    initialValues:{
+    initialValues: {
       name: post?.name ?? '',
       nick: post?.nick ?? '',
       description: post?.description ?? '',

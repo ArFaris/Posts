@@ -1,19 +1,22 @@
-import type { TrpcRouterOutput } from '@react_project/backend/src/router'
+import { canBlockPosts, canEditPost, type MaybePost } from '@react_project/backend/src/Utils/can';
+import type { TrpcRouterOutput } from '@react_project/backend/src/router';
 import { format } from 'date-fns/format';
 import { useParams } from 'react-router-dom';
-import { LinkButton } from '../../../components/Button';
+import { Alert } from '../../../components/Alert';
+import { Button, LinkButton } from '../../../components/Button';
+import { FormItems } from '../../../components/FormItems';
 import { Segment } from '../../../components/Segment';
+import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { getEditPostRoute, type ViewPostRouteParams } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
 import css from './index.module.scss';
 
-
 const LikeButton = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['post']> }) => {
-  const trpcUtils = trpc.useContext()
+  const trpcUtils = trpc.useContext();
   const setPostLike = trpc.setPostLike.useMutation({
     onMutate: ({ isLikedByMe }) => {
-      const oldGetPostData = trpcUtils.getPost.getData({ postNick: post.nick! })
+      const oldGetPostData = trpcUtils.getPost.getData({ postNick: post.nick! });
       if (oldGetPostData?.post) {
         const newGetPostData = {
           ...oldGetPostData,
@@ -22,25 +25,47 @@ const LikeButton = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['p
             isLikedByMe,
             likesCount: oldGetPostData.post.likesCount + (isLikedByMe ? 1 : -1),
           },
-        }
-        trpcUtils.getPost.setData({ postNick: post.nick! }, newGetPostData)
+        };
+        trpcUtils.getPost.setData({ postNick: post.nick! }, newGetPostData);
       }
     },
     onSuccess: () => {
-      void trpcUtils.getPost.invalidate({ postNick: post.nick })
+      void trpcUtils.getPost.invalidate({ postNick: post.nick });
     },
-  })
+  });
   return (
     <button
       className={css.likeButton}
       onClick={() => {
-        void setPostLike.mutateAsync({ postId: post.id!, isLikedByMe: !post.isLikedByMe })
+        void setPostLike.mutateAsync({ postId: post.id!, isLikedByMe: !post.isLikedByMe });
       }}
     >
       {post.isLikedByMe ? 'Unlike' : 'Like'}
     </button>
-  )
-}
+  );
+};
+
+const BlockPost = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['post']> }) => {
+  const blockPost = trpc.blockPost.useMutation();
+  const trpcUtils = trpc.useContext();
+  const { formik, alertProps, buttonProps } = useForm({
+    initialValues: {},
+    onSubmit: async () => {
+      await blockPost.mutateAsync({ postId: post.id! });
+      await trpcUtils.getPost.refetch({ postNick: post.nick! });
+    },
+  });
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <FormItems>
+        <Alert {...alertProps} />
+        <Button color="red" {...buttonProps}>
+          Block Post
+        </Button>
+      </FormItems>
+    </form>
+  );
+};
 
 export const ViewPostPage = withPageWrapper({
   useQuery: () => {
@@ -72,9 +97,14 @@ export const ViewPostPage = withPageWrapper({
         </>
       )}
     </div>
-    {me?.id === post.authorId && (
+    {canEditPost(me, post as MaybePost) && (
       <div className={css.editButton}>
         <LinkButton to={getEditPostRoute({ postNick: post.nick! })}>Edit Post</LinkButton>
+      </div>
+    )}
+    {canBlockPosts(me) && (
+      <div className={css.blockPost}>
+        <BlockPost post={post} />
       </div>
     )}
   </Segment>
