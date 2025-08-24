@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
+import Logo from '../../assets/images/logo.svg'
 import { useMe } from '../../lib/ctx';
 import {
   getAllPostsRoute,
@@ -16,7 +17,7 @@ export const Layout = () => {
   return (
     <div className={css.layout}>
       <div className={css.navigation}>
-        <div className={css.logo}>PostNick</div>
+        <div className={css.logo}><Logo /></div>
         <ul className={css.menu}>
           <li className={css.item}>
             <Link className={css.link} to={getAllPostsRoute()}>
