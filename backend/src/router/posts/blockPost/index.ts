@@ -1,4 +1,5 @@
 import { canBlockPosts } from '../../../Utils/can';
+import { sendPostBlockedEmail } from '../../../lib/emails';
 import { trpc } from '../../../lib/trpc';
 import { zBlockPostTrpcInput } from './input';
 
@@ -10,6 +11,9 @@ export const blockPostTrpcRoute = trpc.procedure.input(zBlockPostTrpcInput).muta
   const post = await ctx.prisma.post.findUnique({
     where: {
       id: postId,
+    },
+    include: {
+      author: true,
     },
   });
   if (!post) {
@@ -23,5 +27,6 @@ export const blockPostTrpcRoute = trpc.procedure.input(zBlockPostTrpcInput).muta
       blockedAt: new Date(),
     },
   });
+  void sendPostBlockedEmail({ user: post.author, post });
   return true;
 });
