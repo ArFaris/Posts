@@ -1,23 +1,23 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["fullTextSearch"]
-
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id        String   @id @default(uuid())
-    nick      String   @unique
-    name      String   @default("")
-    password  String
-    createdAt DateTime @default(now())
-    posts     Post[]
-    postsLikes PostLike[]
-    permissions UserPermission[]
+  id          String           @id @default(uuid())
+  nick        String           @unique
+  email       String           @unique
+  name        String           @default("")
+  password    String
+  createdAt   DateTime         @default(now())
+  posts       Post[]
+  postsLikes  PostLike[]
+  permissions UserPermission[]
 }
 
 enum UserPermission {
@@ -26,17 +26,17 @@ enum UserPermission {
 }
 
 model Post {
-    id           String   @id @default(uuid())
-    nick         String   @unique
-    serialNumber Int      @unique @default(autoincrement())
-    name         String
-    description  String
-    text         String
-    createdAt    DateTime @default(now())
-    authorId     String
-    author       User     @relation(fields: [authorId], references: [id])
-    postsLikes   PostLike[]
-    blockedAt    DateTime?
+  id           String     @id @default(uuid())
+  nick         String     @unique
+  serialNumber Int        @unique @default(autoincrement())
+  name         String
+  description  String
+  text         String
+  createdAt    DateTime   @default(now())
+  authorId     String
+  author       User       @relation(fields: [authorId], references: [id])
+  postsLikes   PostLike[]
+  blockedAt    DateTime?
 }
 
 model PostLike {
