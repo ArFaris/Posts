@@ -6,21 +6,97 @@
 }
 
 .posts {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 62px;
+  justify-content: center;
+  margin-top: 62px;
+
   .post {
     padding: 20px;
-    border: 1px solid $black;
-    border-radius: 10px;
+    border-radius: $borderRadiusBig;
+    box-sizing: border-box;
+    background-color: $white;
+    border: none;
+    outline: none;
+    box-shadow: 0 6px 34px rgb(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: 250px;
+    height: 300px;
+    flex: 0 0 auto;
 
     & + .post {
-      margin-top: 20px;
+      margin-top: 0;
     }
 
     .postLink {
       @include link;
+      color: $brown;
+
+      &:hover {
+        color: $red;
+      }
     }
   }
 
   .more {
     margin-top: 15px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.preview {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 130px;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  flex-flow: column;
+  gap: 17px;
+  max-width: 269px;
+  width: 100%;
+
+  h1 {
+    @include h1;
+  }
+
+  h2 {
+    @include h2;
+  }
+}
+
+.previewSection,
+.contentSection {
+  min-height: calc(100vh - 104px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentSection {
+  margin-top: 80px;
+}
+
+.transparentButton {
+  all: unset;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    all: unset;
+    cursor: pointer;
+  }
+
+  > * {
+    display: block;
   }
 }

@@ -2,6 +2,7 @@ import { zSignUpTrpcInput } from '@react_project/backend/src/router/auth/signUp/
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import brownDog from '../../../assets/images/dogs/brownDog.png';
 import { Alert } from '../../../components/Alert';
 import { Button } from '../../../components/Button';
 import { FormItems } from '../../../components/FormItems';
@@ -11,6 +12,7 @@ import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { getAllPostsRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
+import css from './index.module.scss';
 
 export const SignUpPage = withPageWrapper({
   redirectAuthorized: true,
@@ -49,17 +51,20 @@ export const SignUpPage = withPageWrapper({
   });
 
   return (
-    <Segment title="Sign Up">
-      <form onSubmit={formik.handleSubmit}>
-        <FormItems>
-          <Input label="Nick" name="nick" formik={formik} />
-          <Input label="E-mail" name="email" formik={formik} />
-          <Input label="Password" name="password" type="password" formik={formik} />
-          <Input label="Password again" name="passwordAgain" type="password" formik={formik} />
-          <Alert {...alertProps} />
-          <Button {...buttonProps}>Sign Up</Button>
-        </FormItems>
-      </form>
-    </Segment>
+    <div className={css.form}>
+      <Segment title="Sign Up" marginTop="70px" width={235}>
+        <form onSubmit={formik.handleSubmit}>
+          <FormItems>
+            <Input label="Nick" name="nick" formik={formik} />
+            <Input label="E-mail" name="email" formik={formik} />
+            <Input label="Password" name="password" type="password" formik={formik} />
+            <Input label="Password again" name="passwordAgain" type="password" formik={formik} />
+            <Alert {...alertProps} />
+            <Button {...buttonProps}>Sign Up</Button>
+          </FormItems>
+        </form>
+      </Segment>
+      <img src={brownDog} alt="Brown Dog" width="467px" />
+    </div>
   );
 });

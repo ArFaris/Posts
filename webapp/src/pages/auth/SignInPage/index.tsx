@@ -2,6 +2,7 @@ import { zSignInTrpcInput } from '@react_project/backend/src/router/auth/signIn/
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+import whiteDog from '../../../assets/images/dogs/whiteDog.png';
 import { Alert } from '../../../components/Alert';
 import { Button } from '../../../components/Button';
 import { FormItems } from '../../../components/FormItems';
@@ -11,6 +12,7 @@ import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { getAllPostsRoute } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
+import css from './index.module.scss';
 
 export const SignInPage = withPageWrapper({
   redirectAuthorized: true,
@@ -34,15 +36,18 @@ export const SignInPage = withPageWrapper({
   });
 
   return (
-    <Segment title="Sign In">
-      <form onSubmit={formik.handleSubmit}>
-        <FormItems>
-          <Input label="Nick" name="nick" formik={formik} />
-          <Input label="Password" name="password" type="password" formik={formik} />
-          <Alert {...alertProps} />
-          <Button {...buttonProps}>Sign in</Button>
-        </FormItems>
-      </form>
-    </Segment>
+    <div className={css.form}>
+      <img src={whiteDog} alt="White Dog" />
+      <Segment title="Sign In" marginTop="160px" width={235}>
+        <form onSubmit={formik.handleSubmit}>
+          <FormItems>
+            <Input label="Nick" name="nick" formik={formik} />
+            <Input label="Password" name="password" type="password" formik={formik} />
+            <Alert {...alertProps} />
+            <Button {...buttonProps}>Sign in</Button>
+          </FormItems>
+        </form>
+      </Segment>
+    </div>
   );
 });

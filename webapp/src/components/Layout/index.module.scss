@@ -2,47 +2,48 @@
 @import '../../styles/mixins';
 
 $breakpoint: '<=900px';
+$breakpoint2: '<=390px';
 
 .layout {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   height: 100%;
-  @include media($breakpoint) {
-    flex-flow: column nowrap;
-  }
 
   .navigation {
-    height: 100%;
-    overflow: auto;
-    flex: 0 0 200px;
-    padding: 20px 30px;
-    border-right: 1px solid $black;
+    height: 64px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    flex: 0 0 64px;
+    padding: 0 10%;
+    background-color: $green;
     @include media($breakpoint) {
-      overflow: visible;
-      flex: 0 0 auto;
-      height: auto;
-      border-right: none;
-      border-bottom: 1px solid $black;
+      justify-content: center;
+      gap: 20px;
     }
   }
 
   .logo {
-      padding-top: 2px;
-      width: 100%;
-      max-width: 130px;
-      height: auto;
-      margin-bottom: 15px;
-    }
+    padding-top: 2px;
+    width: 30px;
+    height: 30px;
+  }
 
   .menu {
-    .item {
-      &:not(:first-child) {
-        margin-top: 5px;
-      }
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 57px;
 
+    .item {
       .link {
         @include link;
       }
+    }
+    @include media($breakpoint2) {
+      gap: 30px;
     }
   }
 
@@ -51,6 +52,7 @@ $breakpoint: '<=900px';
     overflow: auto;
     flex: 1 1 100%;
     padding: 20px 30px;
+
     @include media($breakpoint) {
       overflow: visible;
       height: auto;

@@ -20,18 +20,241 @@
   }
 }
 
-.likes {
-  margin-top: 20px;
-
-  .likeButton {
-    @include link;
-  }
-}
-
 .editButton {
   margin-top: 20px;
 }
 
 .blockIdea {
   margin-top: 20px;
+}
+
+.wrapper {
+  padding: 20px;
+  border-radius: $borderRadiusBig;
+  box-sizing: border-box;
+  background-color: $white;
+  border: none;
+  outline: none;
+  box-shadow: 0 6px 34px rgb(0, 0, 0, 0.12);
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.likes {
+  margin-top: 20px;
+
+  .likeButton {
+    all: unset;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 8px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+
+    &:hover .likeImage {
+      animation: heartbeat 1.2s infinite ease-in-out;
+      transform: translateY(-2px);
+    }
+  }
+
+  .likeImage {
+    position: relative;
+    z-index: 2;
+    user-select: none;
+    pointer-events: none;
+    transition: transform 0.3s ease;
+
+    animation: none;
+    transform: translateY(0);
+  }
+
+  @keyframes heartbeat {
+    0% {
+      transform: translateY(-2px) scale(1);
+    }
+
+    14% {
+      transform: translateY(-2px) scale(1.1);
+    }
+
+    28% {
+      transform: translateY(-2px) scale(1);
+    }
+
+    42% {
+      transform: translateY(-2px) scale(1.1);
+    }
+
+    70% {
+      transform: translateY(-2px) scale(1);
+    }
+  }
+}
+
+.postLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.firstRow {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.secondRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: start;
+}
+
+.sectionFrame {
+  border-radius: $borderRadiusBig;
+  box-sizing: border-box;
+  background-color: $white;
+  border: none;
+  outline: none;
+  box-shadow: 0 6px 34px rgb(0, 0, 0, 0.12);
+  padding: 20px;
+}
+
+.photoFrame {
+  width: 250px;
+  height: 300px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: $borderRadiusBig;
+
+  .photoPlaceholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f8f8;
+    color: #999;
+    font-style: italic;
+    border-radius: $borderRadiusBig;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: $borderRadiusBig;
+  }
+}
+
+.infoColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.nameSection {
+  height: 191px;
+  max-height: 151px;
+
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    color: $brown;
+    font-weight: bold;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: $brown;
+    font-weight: normal;
+  }
+}
+
+.metaSection {
+  height: 51px;
+  max-height: 51px;
+
+  .author {
+    font-size: 1rem;
+    color: $brown;
+  }
+
+  .createdAt {
+    font-size: 0.9rem;
+    color: #888;
+  }
+}
+
+.textSection {
+  width: 497px;
+  min-height: 246px;
+  box-sizing: border-box;
+
+  .text {
+    width: 100%;
+    line-height: 1.6;
+    color: $brown;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+.actionsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 150px;
+
+  .likes {
+    text-align: center;
+    font-size: 1.1rem;
+    color: $brown;
+  }
+
+  .adminButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+}
+
+@media (width <= 768px) {
+  .postLayout {
+    gap: 40px;
+  }
+
+  .firstRow {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    justify-items: center;
+  }
+
+  .secondRow {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    justify-items: center;
+  }
+
+  .infoColumn {
+    gap: 40px;
+  }
+
+  .textSection {
+    width: 100%;
+    max-width: 497px;
+  }
+
+  .sectionFrame {
+    width: 100%;
+  }
 }

@@ -4,10 +4,14 @@
 .segment {
   h1.title {
     @include h1;
+    margin-left: 8px;
+    margin-bottom: 33px;
   }
 
   h2.title {
     @include h2;
+    margin-left: 8px;
+    margin-bottom: 33px;
   }
 
   .description {

@@ -36,7 +36,7 @@ export const NewPostPage = withPageWrapper({
   });
 
   return (
-    <Segment title="New Post">
+    <Segment title="New Advert">
       <form
         onSubmit={(e) => {
           e.preventDefault();

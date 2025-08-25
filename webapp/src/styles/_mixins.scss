@@ -2,14 +2,13 @@
 @import '../../../node_modules/include-media/dist/include-media';
 @import './vars';
 
-@mixin link($color: $blue, $hoverColor: $red) {
+@mixin link($color: $beige, $hoverColor: $lemon) {
   color: $color;
   transition: color 200ms ease;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
-  text-decoration: underline;
 
   &:hover,
   &:active {
@@ -19,13 +18,14 @@
 }
 
 @mixin h1 {
-  font-size: 30px;
+  font-size: 36px;
   font-weight: bold;
+  color: $brown;
 }
 
 @mixin h2 {
   font-size: 24px;
-  font-weight: bold;
+  color: $brown;
 }
 
 @mixin loader($borderWidth, $size, $color) {

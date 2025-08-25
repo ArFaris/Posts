@@ -1,7 +1,7 @@
 import type { TrpcRouterOutput } from '@react_project/backend/src/router'
 import { zUpdatePasswordTrpcInput } from '@react_project/backend/src/router/auth/updatePassword/input'
 import { zUpdateProfileTrpcInput } from '@react_project/backend/src/router/auth/updateProfile/input';
-import {z}from 'zod';
+import { z } from 'zod';
 import { Alert } from '../../../components/Alert';
 import { Button } from '../../../components/Button';
 import { FormItems } from '../../../components/FormItems';
@@ -88,14 +88,12 @@ export const EditProfilePage = withPageWrapper({
 })(({ me }) => {
   return (
     <Segment title="Edit Profile">
-      <Segment title="General" size={2}>
-        <General me={me} />
-      </Segment>
-      <Segment title="Password" size={2}>
-        <Password />
-      </Segment>
-
-
+        <Segment title="General" size={2}>
+          <General me={me} />
+        </Segment>
+        <Segment title="Password" size={2}>
+          <Password />
+        </Segment>
     </Segment>
   )
 })

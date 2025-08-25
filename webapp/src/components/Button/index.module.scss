@@ -4,24 +4,27 @@
 
 .button {
   padding: 8px 15px;
-  color: $white;
-  background-color: #0a980a;
+  color: $beige;
+  background-color: $green;
   border: none;
   font-weight: bold;
   border-radius: $borderRadiusSmall;
   cursor: pointer;
   user-select: none;
   position: relative;
+  width: 177px;
+  height: 44px;
+  margin-left: 8px;
 
   &.color-green {
-    background-color: #0a980a;
+    background-color: $green;
 
     &:hover {
-      background-color: #21b821;
+      background-color: #777427;
     }
 
     &:active {
-      background-color: #39d039;
+      background-color: #969220;
     }
   }
 

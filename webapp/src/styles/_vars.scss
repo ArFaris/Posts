@@ -1,13 +1,21 @@
 $white: #fff;
 $black: #000;
-$blue: #00c;
 $red: #c00;
-$gray: #ccc;
+$red2: rgb(200, 129, 129);
+$green: #a3a04f;
+$yellow: #fffdbc;
+$brown: #33302e;
+$beige: #fff3e3;
+$lemon: #fffa67;
+$blue: rgb(125, 135, 151, 0.1);
+$gray: rgb(80, 80, 80);
 
 $defaultFontFamily: 'Helvetica', 'Arial', sans-serif;
 $defaultFontSize: 14px;
-$defaultBackgroundColor: $white;
-$defaultTextColor: $black;
+$defaultBackgroundColor: $yellow;
+$defaultTextColor: $brown;
+$beigeTextColor: $beige;
 $defaultLineHeight: 1.2;
 
-$borderRadiusSmall: 3px;
+$borderRadiusSmall: 8px;
+$borderRadiusBig: 24px;

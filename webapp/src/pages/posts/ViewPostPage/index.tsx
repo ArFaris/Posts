@@ -2,11 +2,11 @@ import { canBlockPosts, canEditPost, type MaybePost } from '@react_project/backe
 import type { TrpcRouterOutput } from '@react_project/backend/src/router';
 import { format } from 'date-fns/format';
 import { useParams } from 'react-router-dom';
+import likeEmpty from '../../../assets/images/likes/like-empty.png';
+import likeFilled from '../../../assets/images/likes/like-filled.png';
 import { Alert } from '../../../components/Alert';
 import { Button, LinkButton } from '../../../components/Button';
 import { FormItems } from '../../../components/FormItems';
-import { Icon } from '../../../components/Icon'
-import { Segment } from '../../../components/Segment';
 import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { getEditPostRoute, type ViewPostRouteParams } from '../../../lib/routes';
@@ -41,7 +41,11 @@ const LikeButton = ({ post }: { post: NonNullable<TrpcRouterOutput['getPost']['p
         void setPostLike.mutateAsync({ postId: post.id!, isLikedByMe: !post.isLikedByMe });
       }}
     >
-      <Icon size={32} className={css.likeIcon} name={post.isLikedByMe ? 'likeFilled' : 'likeEmpty'} />
+      <img
+        src={post.isLikedByMe ? likeFilled : likeEmpty}
+        alt={post.isLikedByMe ? 'Unlike' : 'Like'}
+        className={css.likeImage}
+      />
     </button>
   );
 };
@@ -76,37 +80,68 @@ export const ViewPostPage = withPageWrapper({
     });
   },
   setProps: ({ queryResult, checkExists, ctx }) => ({
-    post: checkExists(queryResult.data.post, 'Post not found'),
+    post: checkExists(queryResult.data.post, 'The pet was not found'),
 
     me: ctx.me,
   }),
   showLoaderOnFetching: false,
 })(({ post, me }) => (
-  <Segment title={post.name} description={post.description}>
-    <div className={css.createdAt}>Created At: {format(post.createdAt!, 'yyyy-MM-dd')}</div>
-    <div className={css.author}>
-      Author: {post.author!.nick}
-      {post.author!.name ? ` (${post.author!.name})` : ''}
-    </div>{' '}
-    <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text! }} />
-    <div className={css.likes}>
-      Likes: {post.likesCount}
-      {me && (
-        <>
-          <br />
-          <LikeButton post={post} />
-        </>
-      )}
+  <div className={css.postLayout}>
+    <div className={css.firstRow}>
+      <div className={css.sectionFrame}>
+        <div className={css.photoFrame}></div>
+      </div>
+
+      <div className={css.infoColumn}>
+        <div className={css.sectionFrame}>
+          <div className={css.nameSection}>
+            <h1>{post.name}</h1>
+            <h2>{post.description}</h2>
+          </div>
+        </div>
+
+        <div className={css.sectionFrame}>
+          <div className={css.metaSection}>
+            <div className={css.author}>
+              Author: {post.author!.nick}
+              {post.author!.name ? ` (${post.author!.name})` : ''}
+            </div>
+            <div className={css.createdAt}>Created At: {format(post.createdAt!, 'yyyy-MM-dd')}</div>
+          </div>
+        </div>
+      </div>
     </div>
-    {canEditPost(me, post as MaybePost) && (
-      <div className={css.editButton}>
-        <LinkButton to={getEditPostRoute({ postNick: post.nick! })}>Edit Post</LinkButton>
+
+    <div className={css.secondRow}>
+      <div className={css.sectionFrame}>
+        <div className={css.textSection}>
+          <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text! }} />
+        </div>
       </div>
-    )}
-    {canBlockPosts(me) && (
-      <div className={css.blockPost}>
-        <BlockPost post={post} />
+
+      <div className={css.actionsSection}>
+        <div className={css.likes}>
+          Likes: {post.likesCount}
+          {me && (
+            <>
+              <br />
+              <LikeButton post={post} />
+            </>
+          )}
+        </div>
+
+        {canEditPost(me, post as MaybePost) && (
+          <div className={css.adminButtons}>
+            <LinkButton to={getEditPostRoute({ postNick: post.nick! })}>Edit Post</LinkButton>
+          </div>
+        )}
+
+        {canBlockPosts(me) && (
+          <div className={css.adminButtons}>
+            <BlockPost post={post} />
+          </div>
+        )}
       </div>
-    )}
-  </Segment>
+    </div>
+  </div>
 ));
