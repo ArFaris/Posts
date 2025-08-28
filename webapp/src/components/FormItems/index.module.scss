@@ -1,6 +1,9 @@
 .formItems {
-  & > *:not(:first-child) {
-    margin-top: 43px;
+  &>*:not(:first-child) {
+    margin-top: 25px;
   }
-  max-width: 235px;
+
+  &>*:last-child {
+    margin-top: 41px !important;
+  }
 }

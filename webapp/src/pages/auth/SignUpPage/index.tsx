@@ -52,7 +52,7 @@ export const SignUpPage = withPageWrapper({
 
   return (
     <div className={css.form}>
-      <Segment title="Sign Up" marginTop="70px" width={235}>
+      <Segment title="Sign Up" className={css.formSegment} width={235}>
         <form onSubmit={formik.handleSubmit}>
           <FormItems>
             <Input label="Nick" name="nick" formik={formik} />
@@ -64,7 +64,7 @@ export const SignUpPage = withPageWrapper({
           </FormItems>
         </form>
       </Segment>
-      <img src={brownDog} alt="Brown Dog" width="467px" />
+      <img src={brownDog} alt="Brown Dog" className={css.formImage}/>
     </div>
   );
 });

@@ -25,7 +25,7 @@ export const AllPostsPage = () => {
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } =
     trpc.getPosts.useInfiniteQuery(
       {
-        limit: 2,
+        limit: 3, // Меняем с 2 на 3 чтобы сразу показывать 3 поста
         search,
       },
       {
@@ -36,14 +36,14 @@ export const AllPostsPage = () => {
     );
 
   return (
-    <div>
+    <div className={css.container}>
       <section className={css.previewSection}>
         <div className={css.preview}>
           <div className={css.title}>
             <h1>Cats and dogs for good hands</h1>
             <h2>Four-legged friends for humans</h2>
           </div>
-          <img src={sadDog} alt="Sad Dog" />
+          <img src={sadDog} alt="Sad Dog" className={css.previewImage} />
         </div>
       </section>
       <section className={css.contentSection}>

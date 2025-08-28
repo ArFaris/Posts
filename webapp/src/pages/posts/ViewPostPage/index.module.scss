@@ -1,117 +1,14 @@
 @import '../../../styles/vars';
 @import '../../../styles/mixins';
 
-.createdAt {
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-
-.author {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.text {
-  font-size: 14px;
-
-  & > *:not(:first-child) {
-    margin-top: 10px;
-  }
-}
-
-.editButton {
-  margin-top: 20px;
-}
-
-.blockIdea {
-  margin-top: 20px;
-}
-
-.wrapper {
-  padding: 20px;
-  border-radius: $borderRadiusBig;
-  box-sizing: border-box;
-  background-color: $white;
-  border: none;
-  outline: none;
-  box-shadow: 0 6px 34px rgb(0, 0, 0, 0.12);
-  width: 100%;
-  flex: 0 0 auto;
-}
-
-.likes {
-  margin-top: 20px;
-
-  .likeButton {
-    all: unset;
-    cursor: pointer;
-    border-radius: 50%;
-    padding: 8px;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-
-    &:hover .likeImage {
-      animation: heartbeat 1.2s infinite ease-in-out;
-      transform: translateY(-2px);
-    }
-  }
-
-  .likeImage {
-    position: relative;
-    z-index: 2;
-    user-select: none;
-    pointer-events: none;
-    transition: transform 0.3s ease;
-
-    animation: none;
-    transform: translateY(0);
-  }
-
-  @keyframes heartbeat {
-    0% {
-      transform: translateY(-2px) scale(1);
-    }
-
-    14% {
-      transform: translateY(-2px) scale(1.1);
-    }
-
-    28% {
-      transform: translateY(-2px) scale(1);
-    }
-
-    42% {
-      transform: translateY(-2px) scale(1.1);
-    }
-
-    70% {
-      transform: translateY(-2px) scale(1);
-    }
-  }
-}
-
 .postLayout {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
   max-width: 900px;
-  margin: 0 auto;
-}
-
-.firstRow {
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 60px;
-  align-items: start;
-}
-
-.secondRow {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 60px;
-  align-items: start;
+  margin: 50px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .sectionFrame {
@@ -124,11 +21,16 @@
   padding: 20px;
 }
 
+.firstRow {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
 .photoFrame {
   width: 250px;
-  height: 300px;
-  padding: 0;
-  margin: 0;
+  height: 280px;
   overflow: hidden;
   border-radius: $borderRadiusBig;
 
@@ -141,7 +43,6 @@
     background: #f8f8f8;
     color: #999;
     font-style: italic;
-    border-radius: $borderRadiusBig;
   }
 
   img {
@@ -149,19 +50,17 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    border-radius: $borderRadiusBig;
   }
 }
 
 .infoColumn {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
 }
 
 .nameSection {
-  height: 191px;
-  max-height: 151px;
+  min-height: 151px;
 
   h1 {
     margin: 0 0 8px 0;
@@ -178,25 +77,61 @@
   }
 }
 
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+
+  gap: 0;
+
+  &:has(.editButtonSection) {
+    gap: 20px;
+  }
+}
+
 .metaSection {
-  height: 51px;
-  max-height: 51px;
+  min-height: 51px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 360px;
+
+  .metaRow:has(.editButtonSection) & {
+    width: 328px;
+  }
 
   .author {
     font-size: 1rem;
     color: $brown;
+    font-weight: bold;
+    margin: 0 0 8px 0;
   }
 
   .createdAt {
     font-size: 0.9rem;
     color: #888;
+    margin: 0;
   }
+}
+
+.editButtonSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.secondRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: start;
 }
 
 .textSection {
   width: 497px;
-  min-height: 246px;
-  box-sizing: border-box;
+  min-height: 200px;
 
   .text {
     width: 100%;
@@ -204,6 +139,11 @@
     color: $brown;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    font-size: 14px;
+
+    & > *:not(:first-child) {
+      margin-top: 10px;
+    }
   }
 }
 
@@ -218,43 +158,199 @@
     text-align: center;
     font-size: 1.1rem;
     color: $brown;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 
   .adminButtons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     align-items: center;
+    gap: 10px;
+  }
+}
+
+.likeButton {
+  all: unset;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 8px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover .likeImage {
+    animation: heartbeat 1.2s infinite ease-in-out;
+    transform: translateY(-2px);
+  }
+}
+
+.likeImage {
+  transition: transform 0.3s ease;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: translateY(-2px) scale(1);
+  }
+
+  14% {
+    transform: translateY(-2px) scale(1.1);
+  }
+
+  28% {
+    transform: translateY(-2px) scale(1);
+  }
+
+  42% {
+    transform: translateY(-2px) scale(1.1);
+  }
+
+  70% {
+    transform: translateY(-2px) scale(1);
+  }
+}
+
+@media (width <= 900px) {
+  .postLayout {
+    gap: 30px;
+    margin: 30px auto;
+  }
+
+  .firstRow,
+  .secondRow {
+    gap: 30px;
+  }
+
+  .textSection {
+    width: 100%;
+  }
+
+  .metaSection {
+    width: 100% !important;
+
+    .hasEditButton & {
+      width: 100% !important;
+    }
   }
 }
 
 @media (width <= 768px) {
   .postLayout {
-    gap: 40px;
+    gap: 25px;
+    margin: 25px auto;
+    padding: 0 15px;
   }
 
   .firstRow {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 25px;
     justify-items: center;
   }
 
   .secondRow {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 25px;
     justify-items: center;
   }
 
   .infoColumn {
-    gap: 40px;
+    gap: 25px;
+    width: 100%;
+  }
+
+  .metaRow {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    order: 3;
+  }
+
+  .nameSection {
+    order: 1;
+    min-height: auto;
+    text-align: center;
+  }
+
+  .editButtonSection {
+    order: 2;
+    width: 100%;
+    justify-content: center;
   }
 
   .textSection {
+    order: 4;
     width: 100%;
-    max-width: 497px;
+    min-height: auto;
+  }
+
+  .actionsSection {
+    order: 5;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .photoFrame {
+    order: 0;
+    width: 200px;
+    height: 220px;
+  }
+}
+
+@media (width <= 480px) {
+  .postLayout {
+    gap: 20px;
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .firstRow,
+  .secondRow {
+    gap: 20px;
   }
 
   .sectionFrame {
-    width: 100%;
+    padding: 15px;
+  }
+
+  .photoFrame {
+    width: 150px;
+    height: 180px;
+  }
+
+  .nameSection {
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
+
+  .metaSection {
+    .author {
+      font-size: 0.9rem;
+    }
+
+    .createdAt {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (width <= 360px) {
+  .postLayout {
+    gap: 15px;
+  }
+
+  .sectionFrame {
+    padding: 12px;
+  }
+
+  .photoFrame {
+    width: 130px;
+    height: 160px;
   }
 }

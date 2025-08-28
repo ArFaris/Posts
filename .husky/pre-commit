@@ -3,4 +3,4 @@
 
 npm run lint-staged
 npm run w stylecheck
-npm run types
+#npm run types

@@ -14,6 +14,10 @@ export default defineConfig(({ mode }) => {
     })],
     server: {
       port: +env.PORT,
+      allowedHosts: [
+        'e53046108c2d3a.lhr.life',
+        '.lhr.life' 
+      ]
     },
     preview: {
       port: +env.PORT,

@@ -86,62 +86,64 @@ export const ViewPostPage = withPageWrapper({
   }),
   showLoaderOnFetching: false,
 })(({ post, me }) => (
-  <div className={css.postLayout}>
-    <div className={css.firstRow}>
+<div className={css.postLayout}>
+  <div className={css.firstRow}>
+    <div className={css.sectionFrame}>
+      <div className={css.photoFrame}>
+      </div>
+    </div>
+
+    <div className={css.infoColumn}>
       <div className={css.sectionFrame}>
-        <div className={css.photoFrame}></div>
+        <div className={css.nameSection}>
+          <h1>{post.name}</h1>
+          <h2>{post.description}</h2>
+        </div>
       </div>
 
-      <div className={css.infoColumn}>
-        <div className={css.sectionFrame}>
-          <div className={css.nameSection}>
-            <h1>{post.name}</h1>
-            <h2>{post.description}</h2>
-          </div>
-        </div>
-
+      <div className={css.metaRow}>
         <div className={css.sectionFrame}>
           <div className={css.metaSection}>
             <div className={css.author}>
               Author: {post.author!.nick}
               {post.author!.name ? ` (${post.author!.name})` : ''}
             </div>
-            <div className={css.createdAt}>Created At: {format(post.createdAt!, 'yyyy-MM-dd')}</div>
+            <div className={css.createdAt}>
+              Created At: {format(post.createdAt!, 'yyyy-MM-dd')}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div className={css.secondRow}>
-      <div className={css.sectionFrame}>
-        <div className={css.textSection}>
-          <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text! }} />
-        </div>
-      </div>
-
-      <div className={css.actionsSection}>
-        <div className={css.likes}>
-          Likes: {post.likesCount}
-          {me && (
-            <>
-              <br />
-              <LikeButton post={post} />
-            </>
-          )}
         </div>
 
         {canEditPost(me, post as MaybePost) && (
-          <div className={css.adminButtons}>
-            <LinkButton to={getEditPostRoute({ postNick: post.nick! })}>Edit Post</LinkButton>
-          </div>
-        )}
-
-        {canBlockPosts(me) && (
-          <div className={css.adminButtons}>
-            <BlockPost post={post} />
+          <div className={css.editButtonSection}>
+            <LinkButton to={getEditPostRoute({ postNick: post.nick! })}>
+              Edit Post
+            </LinkButton>
           </div>
         )}
       </div>
     </div>
   </div>
+
+  <div className={css.secondRow}>
+    <div className={css.sectionFrame}>
+      <div className={css.textSection}>
+        <div className={css.text} dangerouslySetInnerHTML={{ __html: post.text! }} />
+      </div>
+    </div>
+
+    <div className={css.actionsSection}>
+      <div className={css.likes}>
+        Likes: {post.likesCount}
+        {me && <LikeButton post={post} />}
+      </div>
+
+      {canBlockPosts(me) && (
+        <div className={css.adminButtons}>
+          <BlockPost post={post} />
+        </div>
+      )}
+    </div>
+  </div>
+</div>
 ));

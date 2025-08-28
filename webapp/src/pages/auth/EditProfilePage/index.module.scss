@@ -1,0 +1,140 @@
+@import '../../../styles/vars';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin-top: 90px;
+
+  @media (width <= 1024px) {
+    margin-top: 150px;
+  }
+
+  @media (width <= 768px) {
+    margin-top: 120px;
+  }
+
+  @media (width <= 640px) {
+    margin-top: 100px;
+    padding: 0 16px;
+  }
+
+  @media (width <= 480px) {
+    margin-top: 80px;
+    padding: 0 12px;
+  }
+}
+
+.columnsContainer {
+  display: flex;
+  gap: 119px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 7px;
+  box-sizing: border-box;
+
+  @media (width <= 1024px) {
+    gap: 80px;
+  }
+
+  @media (width <= 900px) {
+    gap: 60px;
+  }
+
+  @media (width <= 768px) {
+    gap: 40px;
+  }
+
+  @media (width <= 640px) {
+    flex-direction: column;
+    gap: 48px;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  @media (width <= 480px) {
+    gap: 40px;
+    margin-top: 32px;
+  }
+}
+
+.column {
+  width: 235px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+
+  @media (width <= 900px) {
+    width: 220px;
+  }
+
+  @media (width <= 640px) {
+    width: 100%;
+    max-width: 400px;
+    align-items: center;
+  }
+
+  @media (width <= 480px) {
+    max-width: 100%;
+  }
+}
+
+.formItemsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
+
+  @media (width <= 640px) {
+    gap: 24px;
+  }
+
+  @media (width <= 480px) {
+    gap: 20px;
+  }
+}
+
+.inputContainer {
+  width: 235px;
+  display: flex;
+  justify-content: center;
+
+  @media (width <= 900px) {
+    width: 220px;
+  }
+
+  @media (width <= 640px) {
+    width: 100%;
+  }
+}
+
+.pageTitle {
+  text-align: center;
+  width: 100%;
+
+  @media (width <= 640px) {
+    margin-bottom: 24px;
+  }
+}
+
+@media (width <= 640px) {
+  .mobileCentered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobileSpacing {
+    margin-bottom: 12px;
+  }
+
+  .formItem + .formItem {
+    margin-top: 16px;
+  }
+}

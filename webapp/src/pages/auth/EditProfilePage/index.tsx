@@ -10,6 +10,7 @@ import { Segment } from '../../../components/Segment';
 import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { trpc } from '../../../lib/trpc';
+import css from './index.module.scss';
 
 const General = ({ me }: { me: NonNullable<TrpcRouterOutput['getMe']['me']> }) => {
   const trpcUtils = trpc.useContext();
@@ -87,13 +88,24 @@ export const EditProfilePage = withPageWrapper({
   }),
 })(({ me }) => {
   return (
-    <Segment title="Edit Profile">
-        <Segment title="General" size={2}>
-          <General me={me} />
-        </Segment>
-        <Segment title="Password" size={2}>
-          <Password />
-        </Segment>
-    </Segment>
+    <div className={css.container}>
+      <Segment
+        title="Edit Profile"
+        className={css.mainTitle}
+      />
+
+      <div className={css.columnsContainer}>
+        <div className={css.column}>
+          <Segment title="Password" size={2} width="235px" className={css.centeredSegment}>
+            <Password />
+          </Segment>
+        </div>
+        <div className={css.column}>
+          <Segment title="General" size={2} width="235px" className={css.centeredSegment}>
+            <General me={me} />
+          </Segment>
+        </div>
+      </div>
+    </div>
   )
 })

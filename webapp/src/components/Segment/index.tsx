@@ -7,9 +7,10 @@ type SegmentProps = {
   children?: React.ReactNode;
   marginTop?: string | number;
   width?: string | number;
+  className?: string;
 };
 
-export const Segment = ({ title, size = 1, description, children, marginTop, width }: SegmentProps) => {
+export const Segment = ({ title, size = 1, description, children, marginTop, width, className}: SegmentProps) => {
   const segmentStyle = {
     ...(marginTop ? {
       marginTop: typeof marginTop === 'number' ? `${marginTop}px` : marginTop
@@ -19,7 +20,7 @@ export const Segment = ({ title, size = 1, description, children, marginTop, wid
     } : {})
   }; 
   return (
-    <div className={css.segment} style={segmentStyle}>
+    <div className={`${css.segment} ${className || ''}`} style={segmentStyle}>
       {size === 1 ? <h1 className={css.title}>{title}</h1> : <h2 className={css.title}>{title}</h2>}
       {description && <p className={css.description}>{description}</p>}
       {children && <div className={css.content}>{children}</div>}

@@ -2,6 +2,7 @@ import { type MaybePost, canEditPost } from '@react_project/backend/src/Utils/ca
 import { zUpdatePostTrpcInput } from '@react_project/backend/src/router/posts/updatePost/input';
 import { useNavigate, useParams } from 'react-router-dom';
 import type { ZodSchema } from 'zod';
+import ballownDog from '../../../assets/images/dogs/ballownDog.png';
 import { Alert } from '../../../components/Alert';
 import { Button } from '../../../components/Button';
 import { FormItems } from '../../../components/FormItems';
@@ -12,6 +13,7 @@ import { useForm } from '../../../lib/form';
 import { withPageWrapper } from '../../../lib/pageWrapper';
 import { getViewPostRoute, type EditPostRouteParams } from '../../../lib/routes';
 import { trpc } from '../../../lib/trpc';
+import css from './index.module.scss';
 
 export const EditPostPage = withPageWrapper({
   authorizedOnly: true,
@@ -53,17 +55,25 @@ export const EditPostPage = withPageWrapper({
   });
 
   return (
-    <Segment title={`Edit Post: ${post.nick}`}>
-      <form onSubmit={formik.handleSubmit}>
-        <FormItems>
-          <Input label="Name" name="name" formik={formik} />
-          <Input label="Nick" name="nick" formik={formik} />
-          <Input label="Description" name="description" formik={formik} />
-          <TextArea label="Text" name="text" formik={formik} />
-          <Alert {...alertProps} />
-          <Button {...buttonProps}>Edit Post</Button>
-        </FormItems>
-      </form>
-    </Segment>
+        <div className={css.form}>
+      <img src={ballownDog} alt="Ballown Dog" className={css.formImage}/>
+      <Segment title={`Edit Post: ${post.nick}`} className={css.formSegment} width={408}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            formik.handleSubmit();
+          }}
+        >
+          <FormItems>
+            <Input name="name" label="Name" formik={formik} />
+            <Input name="nick" label="Nick" formik={formik} />
+            <Input name="description" label="Description" formik={formik} maxWidth={500} />
+            <TextArea name="text" label="Text" formik={formik} />
+            <Alert {...alertProps} />
+            <Button {...buttonProps}>Create post</Button>
+          </FormItems>
+        </form>
+      </Segment>
+    </div>
   );
 });

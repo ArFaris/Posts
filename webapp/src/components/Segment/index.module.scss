@@ -6,12 +6,20 @@
     @include h1;
     margin-left: 8px;
     margin-bottom: 33px;
+
+    @media (width <= 640px) {
+      margin-left: 0;
+    }
   }
 
   h2.title {
     @include h2;
     margin-left: 8px;
     margin-bottom: 33px;
+
+    @media (width <= 640px) {
+      margin-left: 0;
+    }
   }
 
   .description {
