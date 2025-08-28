@@ -8,7 +8,6 @@
   ],
   "scripts": {
     "lint-staged": "lint-staged",
-    "prepare": "husky",
     "b": "npm run --workspace=@react_project/backend",
     "w": "npm run --workspace=@react_project/webapp",
     "dev": "concurrently -n BACKEND,FRONTEND -c bgBlue.bold,bgGreen.bold \"npm run b dev\" \"npm run w dev\"",
