@@ -8,7 +8,6 @@ export const zCreatePostTrpcInput = z.object({
     .regex(/^[a-z0-9-]+$/, 'Nick may contain only lowercase letters, numbers and daches'),
   description: z.string().min(1),
   text: z.string().min(100, 'Text should be at least 100 characters long'),
-  images: z.array(z.string().min(1)),
 }) satisfies z.ZodType<{
   name: string;
   nick: string;
